@@ -104,9 +104,36 @@ partition = function(arr, start, end){
     partition(arr, r + 1, end);
 }
 
-MergeSort = function(){
-
+MergeSort = function(arr){
+    for(let size = 1; size < arr.length; size*=2){
+        let i = 0;
+        while((i*size + size) < arr.length){
+            let left = i*size;
+            let right = (i*size + size + size) >= arr.length ? arr.length - 1 : (i+2) * size - 1;
+            merge(arr,left, left+size, right);
+            i++;
+        }
+    }
+    return arr;
 };
+
+merge = function(arr, left, mid, right){
+    let leftArr = arr.slice(left,mid);
+    let rightArr = arr.slice(mid,right + 1);
+    leftArr.push(Infinity);
+    rightArr.push(Infinity);
+    let i = 0;
+    let j = 0;
+    for(let k = left; k <= right; k++){
+        if(leftArr[i] < rightArr[j]){
+            arr[k] = leftArr[i];
+            i++;
+        }else{
+            arr[k] = rightArr[j];
+            j++;
+        }
+    }
+}
 
 HillSort = function(){
 
