@@ -135,8 +135,38 @@ merge = function(arr, left, mid, right){
     }
 }
 
-HillSort = function(){
-
+ShellSort = function(arr){
+    let length = arr.length;
+    let h = 1;
+    while(h < length){
+        h = h * 3 + 1;
+    }
+    h = (h - 1) / 3;
+    while(h >= 1){
+        for(let i = 0; i < h; i++){
+            let current = i;
+            
+            while(current < length){
+                let tmp = arr[current];
+                let j = current - h;
+                if(j < 0){
+                    current += h;
+                    continue;
+                }
+                while(j >= 0){
+                    if(arr[j] >= tmp){
+                        arr[j + h] = arr[j];
+                        j = j - h;
+                    }else{
+                        break;
+                    }
+                }
+                arr[j + h] = tmp;
+                current = current + h;
+            }
+        }
+        h = (h - 1)/3;
+    }
 };
 
 // console.log(QuickSort([6,7,4,5,1]));
