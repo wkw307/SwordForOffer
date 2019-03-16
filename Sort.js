@@ -75,6 +75,35 @@ QuickSort = function(arr){
     return QuickSort(arr.slice(0,i-1)).concat(QuickSort(arr.slice(i-1,arr.length)));
 };
 
+QuickSort2 = function(arr){
+    partition(arr, 0, arr.length - 1);
+}
+
+partition = function(arr, start, end){
+    if(start >= end) return;
+    let key = arr[start];
+    let l = start + 1;
+    let r = end;
+    while(l <= r){
+        if(arr[l] > key && arr[r] < key){
+            let tmp = arr[l];
+            arr[l] = arr[r];
+            arr[r] = tmp;
+        }
+        if(arr[l] <= key){
+            l ++;
+        }
+        if(arr[r] > key){
+            r --;
+        }
+    }
+    let tmp = arr[start];
+    arr[start] = arr[r];
+    arr[r] = tmp;
+    partition(arr, start, r - 1);
+    partition(arr, r + 1, end);
+}
+
 MergeSort = function(){
 
 };
@@ -83,4 +112,4 @@ HillSort = function(){
 
 };
 
-console.log(QuickSort([6,7,4,5,1]));
+// console.log(QuickSort([6,7,4,5,1]));
