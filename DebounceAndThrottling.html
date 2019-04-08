@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<head>
+
+</head>
+<body>
+  <div><label for="nodebounce">no debounce:</label><input id="nodebounce"/></div>
+  <div><label for="debounce">debounce:</label><input id="debounce"/></div>
+  <div><label for="throttling">throttling:</label><input id="throttling"/></div>
+  <script>
+    // 每次触发事件就触发函数
+    let inputa = document.getElementById('nodebounce');
+    inputa.addEventListener('keyup', function(e){
+      console.log(e);
+    });
+    // 每次触发事件都重新计算延迟
+    let inputb = document.getElementById('debounce');
+    function debounce(fun, delay){
+      return function(args){
+        let that = this;
+        let _args = args;
+        clearTimeout(fun.id);
+        fun.id = setTimeout(function(){
+          fun.apply(that, _args)
+        }, delay);
+      }
+    }
+    function ajax(content){
+      console.log('ajax request ' + content);
+    }
+    // 每次触发事件先判断是否有未执行函数
+    let debounceAjax = debounce(ajax, 500);
+    inputb.addEventListener('keyup', function(e){
+      debounceAjax(e.target.value);
+    });
+    let inputc = document.getElementById('throttling');
+    function throttling(fun, delay){
+      let timer = null;
+      return function(){
+        let that = this;
+        let args = arguments;
+        if(!timer){
+          timer = setTimeout(() => {
+            fun.apply(that, args);
+            timer = null;
+          }, delay);
+        }
+      }
+    }
+    let throttleAjax = throttling(ajax, 1000);
+    inputc.addEventListener('keyup', function(e){
+      throttleAjax(e.target.value);
+    });
+  </script>
+</body>
