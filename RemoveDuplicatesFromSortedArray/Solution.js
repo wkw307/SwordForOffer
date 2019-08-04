@@ -4,7 +4,7 @@
  * @return {number}
  */
 var removeDuplicates = function(nums) {
-  if (nums.length === 0 || nums.length === 1) return nums;
+  if (nums.length === 0 || nums.length === 1) return nums.length;
   let left = 0;
   let right = 1;
   while (right < nums.length) {
